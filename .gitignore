@@ -1,0 +1,26 @@
+# Dependency directories
+node_modules/
+
+# Environment variables
+.env
+
+# IDE or editor specific files
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Build output
+dist/
+coverage/
+
+# Miscellaneous
+*.zip
+*.tar.gz
+*.tar
+*.gz
