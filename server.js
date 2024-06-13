@@ -39,7 +39,6 @@ io.on("connection", (socket) => {
 
   // Handle login event
   socket.on("login", ({ username, password }) => {
-    console.log(username, password, "i here");
     let userData = users.find((item) => item.username === username);
     if (userData?.username && userData.password === password) {
       // Store username in session and userSessions
@@ -57,10 +56,11 @@ io.on("connection", (socket) => {
 
   // Handle vote event
   socket.on("vote", (optionName) => {
-    if (socket.username && !users[socket.username].hasVoted) {
+    let userData = users.find((item) => item.username === socket?.username);
+    if (socket.username && !userData?.hasVoted) {
       const updatedPoll = pollController.vote(optionName);
       io.emit("vote update", updatedPoll);
-      users[socket.username].hasVoted = true; // Mark user as voted
+      userData.hasVoted = true; // Mark user as voted
     }
   });
 
