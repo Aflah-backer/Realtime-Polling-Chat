@@ -2,9 +2,10 @@
 class Poll {
     constructor() {
         this.options = [
-            { name: 'Option 1', votes: 0 },
-            { name: 'Option 2', votes: 0 },
-            { name: 'Option 3', votes: 0 }
+            { name: 'JavaScript', votes: 0 },
+            { name: 'Python', votes: 0 },
+            { name: 'Java', votes: 0 },
+            { name: 'C', votes: 0 },
         ];
     }
 
@@ -13,7 +14,7 @@ class Poll {
     }
 
     vote(optionName) {
-        const option = this.options.find(opt => opt.name === optionName);
+        const option = this.options.find(opt => opt.name === optionName?.option);
         if (option) {
             option.votes += 1;
         }
