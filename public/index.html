@@ -1,45 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Real-time Polling and Chat</title>
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
     <div id="container">
-        <!-- Authentication Section -->
-        <div id="auth-section">
-            <input id="username-input" type="text" placeholder="Enter your username">
-            <input id="password-input" type="password" placeholder="Enter your password">
-            <button id="login-button">Login</button>
+      <!-- Authentication Section -->
+      <div id="auth-section">
+        <input
+          id="username-input"
+          type="text"
+          placeholder="Enter your username"
+        />
+        <input
+          id="password-input"
+          type="password"
+          placeholder="Enter your password"
+        />
+        <button id="login-button">Login</button>
+      </div>
+
+      <!-- Main Content Section -->
+      <div id="main-content" style="display: none">
+        <div id="user-profile">
+          <span id="username-display"></span>
+          <i id="logout-button" class="fas fa-power-off" style="color: red"></i>
         </div>
 
-        <!-- Main Content Section -->
-        <div id="main-content" style="display: none;">
-            <!-- Poll Section -->
-            <div id="poll-section">
-                <h2>Poll</h2>
-                <div id="poll-options"></div>
-                <div class="poll-buttons">
-                    <button onclick="sendVote('Option 1')">Vote Option 1</button>
-                    <button onclick="sendVote('Option 2')">Vote Option 2</button>
-                    <button onclick="sendVote('Option 3')">Vote Option 3</button>
-                </div>
-            </div>
-
-            <!-- Chat Section -->
-            <div id="chat-section">
-                <h2>Chat</h2>
-                <ul id="chat-messages"></ul>
-                <div id="typing-indicator"></div>
-                <input id="chat-input" type="text" placeholder="Type a message...">
-                <button id="send-button">Send</button>
-            </div>
+        <!-- Poll Section -->
+        <div id="poll-section">
+          <h2>What is your favorite programming language?</h2>
+          <div id="poll-options"></div>
+          <div class="poll-buttons">
+            <button onclick="sendVote('JavaScript')">JavaScript</button>
+            <button onclick="sendVote('Python')">Python</button>
+            <button onclick="sendVote('Java')">Java</button>
+            <button onclick="sendVote('C')">C</button>
+          </div>
         </div>
+
+        <!-- Chat Section -->
+        <div id="chat-section">
+          <h2>Chat</h2>
+          <ul id="chat-messages"></ul>
+          <div id="typing-indicator"></div>
+          <input id="chat-input" type="text" placeholder="Type a message..." />
+          <button id="send-button">Send</button>
+        </div>
+      </div>
     </div>
 
-    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.socket.io/4.7.5/socket.io.min.js"
+      integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO"
+      crossorigin="anonymous"
+    ></script>
     <script src="js/client.js"></script>
-</body>
+  </body>
 </html>
