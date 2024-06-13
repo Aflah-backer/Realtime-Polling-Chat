@@ -165,3 +165,46 @@ h2 {
     align-items: center;
     justify-content: space-between ;
 }
+
+/* Basic styling for the user list container */
+#user-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: .30rem;
+    max-width: 300px; /* Adjust width as needed */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for each user element */
+.user {
+    cursor: pointer;
+    padding: 8px 12px;
+    /* margin-bottom: 8px; */
+    border-radius: 3px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.user:hover {
+    background-color: #f0f0f0;
+}
+
+.user:last-child {
+    margin-bottom: 0; /* Remove bottom margin for the last user element */
+}
+
+h3 {
+    font-size: 24px; /* Adjust font size as needed */
+    font-weight: bold; /* Make the text bold */
+    color: #333; /* Set text color */
+    margin-bottom: 20px; /* Add bottom margin for spacing */
+    border-bottom: 2px solid #ccc; /* Add a bottom border */
+    padding-bottom: 5px; /* Space between text and border */
+}
+

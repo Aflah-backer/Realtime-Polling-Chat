@@ -1,6 +1,32 @@
 document.addEventListener("DOMContentLoaded", () => {
   const socket = io("http://localhost:3000/");
 
+    const userListContainer = document.getElementById('user-list');
+
+    // Fetch users from backend API
+    fetch('/api/users')
+        .then(response => response.json())
+        .then(users => {
+            // Iterate over fetched users and create user elements
+            users.forEach(user => {
+                const userElement = document.createElement('div');
+                userElement.classList.add('user');
+                userElement.setAttribute('data-username', user.username);
+                userElement.setAttribute('data-password', user.password);
+                userElement.textContent = user.username; // Display username as text
+                userListContainer.appendChild(userElement);
+
+                // Add click event listener to populate login form
+                userElement.addEventListener('click', () => {
+                    document.getElementById('username-input').value = user.username;
+                    document.getElementById('password-input').value = user.password;
+                });
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching users:', error);
+        });
+
   // Function to handle user login
   const handleLogin = () => {
     const username = document.getElementById("username-input").value;
