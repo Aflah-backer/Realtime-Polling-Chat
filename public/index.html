@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Real-time Polling and Chat</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
     <div id="container">
         <!-- Authentication Section -->
         <div id="auth-section">
-            <input id="username-input" type="text" placeholder="Enter your username">
-            <input id="password-input" type="password" placeholder="Enter your password">
+            <input id="username-input" type="text" placeholder="Enter your username" />
+            <input id="password-input" type="password" placeholder="Enter your password" />
             <button id="login-button">Login</button>
         </div>
 
         <!-- Main Content Section -->
-        <div id="main-content" style="display: none;">
+        <div id="main-content" style="display: none">
+            <div id="user-profile">
+                <span id="username-display"></span>
+                <button id="logout-button">Logout</button>
+            </div>
+
             <!-- Poll Section -->
             <div id="poll-section">
                 <h2>Poll</h2>
@@ -33,7 +38,7 @@
                 <h2>Chat</h2>
                 <ul id="chat-messages"></ul>
                 <div id="typing-indicator"></div>
-                <input id="chat-input" type="text" placeholder="Type a message...">
+                <input id="chat-input" type="text" placeholder="Type a message..." />
                 <button id="send-button">Send</button>
             </div>
         </div>
