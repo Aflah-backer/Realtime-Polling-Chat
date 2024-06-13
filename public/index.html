@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-time Polling and Chat</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="container">
+        <div id="auth-section">
+            <input id="username-input" type="text" placeholder="Enter your username">
+            <button id="set-username-button">Set Username</button>
+        </div>
+        <div id="main-content" style="display: none;">
+            <div id="poll-section">
+                <h2>Poll</h2>
+                <div id="poll-options"></div>
+                <div class="poll-buttons">
+                    <button onclick="sendVote('Option 1')">Vote Option 1</button>
+                    <button onclick="sendVote('Option 2')">Vote Option 2</button>
+                    <button onclick="sendVote('Option 3')">Vote Option 3</button>
+                </div>
+            </div>
+            <div id="chat-section">
+                <h2>Chat</h2>
+                <div id="chat-messages"></div>
+                <div id="typing-indicator"></div>
+                <input id="chat-input" type="text" placeholder="Type a message...">
+                <button id="send-button">Send</button>
+            </div>
+        </div>
+    </div>
+    <!-- <script src="/socket.io/socket.io.js"></script> -->
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
+    <script src="js/client.js"></script>
+</body>
+</html>
