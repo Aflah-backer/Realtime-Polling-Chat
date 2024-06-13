@@ -1,44 +1,51 @@
 document.addEventListener('DOMContentLoaded', () => {
     const socket = io('http://localhost:3000/');
 
-    // Authentication
-    document.getElementById('set-username-button').addEventListener('click', () => {
+    document.getElementById('login-button').addEventListener('click', () => {
         const username = document.getElementById('username-input').value;
-        socket.emit('set username', username);
-        document.getElementById('auth-section').style.display = 'none';
-        document.getElementById('main-content').style.display = 'flex';
+        const password = document.getElementById('password-input').value;
+        if (username.trim() !== '' && password.trim() !== '') {
+            socket.emit('login', { username, password });
+        }
     });
 
-    // Sending chat messages
+    socket.on('login success', () => {
+        document.getElementById('auth-section').style.display = 'none';
+        document.getElementById('main-content').style.display = 'block';
+    });
+
+    socket.on('login failure', (message) => {
+        alert(message);
+    });
+
     document.getElementById('send-button').addEventListener('click', () => {
         const message = document.getElementById('chat-input').value;
-        socket.emit('chat message', message);
-        document.getElementById('chat-input').value = '';
+        if (message.trim() !== '') {
+            socket.emit('chat message', message);
+            document.getElementById('chat-input').value = '';
+        }
     });
 
-    // Receiving chat messages
     socket.on('chat message', (msg) => {
         const item = document.createElement('li');
         item.textContent = `${msg.user}: ${msg.text}`;
         document.getElementById('chat-messages').appendChild(item);
     });
 
-    // Sending vote
     window.sendVote = function(option) {
         socket.emit('vote', option);
     };
 
-    // Receiving vote updates
     socket.on('vote update', (data) => {
-        document.getElementById('poll-options').innerHTML = '';
+        const pollOptions = document.getElementById('poll-options');
+        pollOptions.innerHTML = '';
         data.forEach(option => {
             const item = document.createElement('div');
             item.textContent = `${option.name}: ${option.votes} votes`;
-            document.getElementById('poll-options').appendChild(item);
+            pollOptions.appendChild(item);
         });
     });
 
-    // Typing indicator
     const chatInput = document.getElementById('chat-input');
     let typingTimeout;
 

@@ -8,11 +8,16 @@
 </head>
 <body>
     <div id="container">
+        <!-- Authentication Section -->
         <div id="auth-section">
             <input id="username-input" type="text" placeholder="Enter your username">
-            <button id="set-username-button">Set Username</button>
+            <input id="password-input" type="password" placeholder="Enter your password">
+            <button id="login-button">Login</button>
         </div>
+
+        <!-- Main Content Section -->
         <div id="main-content" style="display: none;">
+            <!-- Poll Section -->
             <div id="poll-section">
                 <h2>Poll</h2>
                 <div id="poll-options"></div>
@@ -22,16 +27,18 @@
                     <button onclick="sendVote('Option 3')">Vote Option 3</button>
                 </div>
             </div>
+
+            <!-- Chat Section -->
             <div id="chat-section">
                 <h2>Chat</h2>
-                <div id="chat-messages"></div>
+                <ul id="chat-messages"></ul>
                 <div id="typing-indicator"></div>
                 <input id="chat-input" type="text" placeholder="Type a message...">
                 <button id="send-button">Send</button>
             </div>
         </div>
     </div>
-    <!-- <script src="/socket.io/socket.io.js"></script> -->
+
     <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
     <script src="js/client.js"></script>
 </body>

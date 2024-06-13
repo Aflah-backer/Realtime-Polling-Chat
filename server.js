@@ -7,49 +7,61 @@ const pollController = require('./src/controllers/pollController');
 const chatController = require('./src/controllers/chatcontroller');
 
 const app = express();
-const server = http.createServer(app); // Create an HTTP server
-const io = socketIo(server); // Attach Socket.IO to the HTTP server
+const server = http.createServer(app);
+const io = socketIo(server);
 
 app.use(bodyParser.json());
 app.use(express.static('public'));
 app.use('/api', apiRoutes);
 
-// Socket.IO connection handling
+// In-memory user credentials
+const users = {
+    user1: 'password1',
+    user2: 'password2',
+};
+
 io.on('connection', (socket) => {
     console.log('a user connected');
 
-    // Emit initial data when a user connects
-    socket.emit('vote update', pollController.getPollData());
-    socket.emit('chat history', chatController.getChatHistory());
+    socket.on('login', ({ username, password }) => {
+        if (users[username] && users[username] === password) {
+            socket.username = username;
+            socket.emit('login success');
+            console.log(`${username} logged in`);
+            // Emit initial data when a user logs in
+            socket.emit('vote update', pollController.getPollData());
+            socket.emit('chat history', chatController.getChatHistory());
+        } else {
+            socket.emit('login failure', 'Invalid username or password');
+        }
+    });
 
-    // Handle vote event
     socket.on('vote', (optionName) => {
-        const updatedPoll = pollController.vote(optionName);
-        io.emit('vote update', updatedPoll); // Broadcast updated poll data to all clients
+        if (socket.username) {
+            const updatedPoll = pollController.vote(optionName);
+            io.emit('vote update', updatedPoll);
+        }
     });
 
-    // Handle chat message event
     socket.on('chat message', (msg) => {
-        const message = chatController.addMessage(socket.username, msg);
-        io.emit('chat message', message); // Broadcast message to all clients
+        if (socket.username) {
+            const message = chatController.addMessage(socket.username, msg);
+            io.emit('chat message', { user: socket.username, text: msg });
+        }
     });
 
-    // Set username for the socket
-    socket.on('set username', (username) => {
-        socket.username = username;
-    });
-
-    // Handle typing event
     socket.on('typing', () => {
-        socket.broadcast.emit('typing', socket.username);
+        if (socket.username) {
+            socket.broadcast.emit('typing', socket.username);
+        }
     });
 
-    // Handle stop typing event
     socket.on('stop typing', () => {
-        socket.broadcast.emit('stop typing');
+        if (socket.username) {
+            socket.broadcast.emit('stop typing');
+        }
     });
 
-    // Handle disconnection
     socket.on('disconnect', () => {
         console.log('user disconnected');
     });
