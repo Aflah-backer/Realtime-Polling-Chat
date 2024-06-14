@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const socket = io("http://localhost:3000/");
+  const socket = io();
 
     const userListContainer = document.getElementById('user-list');
 

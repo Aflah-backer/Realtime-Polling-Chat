@@ -1,19 +1,29 @@
+// Import required modules
 const express = require("express");
 const http = require("http");
 const socketIo = require("socket.io");
 const bodyParser = require("body-parser");
-const apiRoutes = require("./src/routes/apiRoutes");
+
+// Import controllers
 const pollController = require("./src/controllers/pollController");
 const chatController = require("./src/controllers/chatcontroller");
 
+// Import API routes
+const apiRoutes = require("./src/routes/apiRoutes");
+
+// Initialize Express app and server
 const app = express();
 const server = http.createServer(app);
+
+// Initialize Socket.IO for real-time communication
 const io = socketIo(server);
 
-app.use(bodyParser.json());
-app.use(express.static("public"));
-app.use("/api", apiRoutes);
+// Middleware setup
+app.use(bodyParser.json()); // Parse JSON bodies
+app.use(express.static("public")); // Serve static files
+app.use("/api", apiRoutes); // API routes
 
+// Simulated database of users
 const users = [
   { username: "user1", password: "password1" },
   { username: "user2", password: "password2" },
@@ -30,10 +40,11 @@ const users = [
 app.get("/api/users", (req, res) => {
   res.json(users);
 });
+
 // Store active user sessions
 const userSessions = {};
 
-// Handle socket connections
+// Socket.IO event handling
 io.on("connection", (socket) => {
   console.log("a user connected");
 
@@ -63,16 +74,6 @@ io.on("connection", (socket) => {
       userData.hasVoted = true; // Mark user as voted
     }
   });
-
-  socket.on('disconnect', () => {
-    if (socket.username && users[socket.username]) {
-        console.log(`${socket.username} disconnected`);
-        users[socket.username].hasVoted = false; // Reset voting status
-        delete userSessions[socket.id];
-    } else {
-        console.log('User disconnected');
-    }
-});
 
   // Handle chat message event
   socket.on("chat message", (msg) => {
@@ -107,6 +108,7 @@ io.on("connection", (socket) => {
   });
 });
 
+// Start the server
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
