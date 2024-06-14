@@ -1,31 +1,31 @@
 document.addEventListener("DOMContentLoaded", () => {
   const socket = io();
 
-    const userListContainer = document.getElementById('user-list');
+  const userListContainer = document.getElementById("user-list");
 
-    // Fetch users from backend API
-    fetch('/api/users')
-        .then(response => response.json())
-        .then(users => {
-            // Iterate over fetched users and create user elements
-            users.forEach(user => {
-                const userElement = document.createElement('div');
-                userElement.classList.add('user');
-                userElement.setAttribute('data-username', user.username);
-                userElement.setAttribute('data-password', user.password);
-                userElement.textContent = user.username; // Display username as text
-                userListContainer.appendChild(userElement);
+  // Fetch users from backend API
+  fetch("/api/users")
+    .then((response) => response.json())
+    .then((users) => {
+      // Iterate over fetched users and create user elements
+      users.forEach((user) => {
+        const userElement = document.createElement("div");
+        userElement.classList.add("user");
+        userElement.setAttribute("data-username", user.username);
+        userElement.setAttribute("data-password", user.password);
+        userElement.textContent = user.username; // Display username as text
+        userListContainer.appendChild(userElement);
 
-                // Add click event listener to populate login form
-                userElement.addEventListener('click', () => {
-                    document.getElementById('username-input').value = user.username;
-                    document.getElementById('password-input').value = user.password;
-                });
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching users:', error);
+        // Add click event listener to populate login form
+        userElement.addEventListener("click", () => {
+          document.getElementById("username-input").value = user.username;
+          document.getElementById("password-input").value = user.password;
         });
+      });
+    })
+    .catch((error) => {
+      console.error("Error fetching users:", error);
+    });
 
   // Function to handle user login
   const handleLogin = () => {
@@ -84,10 +84,17 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   socket.on("chat message", (msg) => {
+    console.log(msg);
     const item = document.createElement("li");
     const you = localStorage.getItem("username");
     item.classList.add(`message-${msg.user === you ? "user" : "other"}`);
-    item.innerHTML = msg.text;
+    // item.innerHTML = `${msg.text} ${msg.user}`;
+    item.innerHTML = `
+    <div class="message-box">
+      <span class="username">${msg.user}</span>
+      <p class="message">${msg.text}</p>
+    </div>
+  `;
     document.getElementById("chat-messages").appendChild(item);
     const chatMessages = document.getElementById("chat-messages");
     chatMessages.scrollTop = chatMessages.scrollHeight;
