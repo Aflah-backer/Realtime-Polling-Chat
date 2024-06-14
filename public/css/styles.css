@@ -20,6 +20,7 @@ html {
   width: 90%;
   max-width: 800px;
   margin: 20px;
+  max-width: 100vh;
 }
 
 #auth-section,
@@ -58,9 +59,21 @@ button:hover {
 #main-content {
   display: flex;
   flex-direction: column;
-  display: none;
+  max-height: 600px;
+  overflow-y: auto;
+  scrollbar-width: 1px;
+  -ms-overflow-style: none
 }
 
+::-webkit-scrollbar {
+    display: none; 
+  }
+
+.wrapper {
+  display: flex;
+  justify-content: space-around;
+  gap: 3rem;
+}
 h2 {
   margin-top: 0;
   font-size: 24px;
@@ -71,40 +84,43 @@ h2 {
 #chat-section {
   margin-top: 20px;
 }
-
+.message-input-wrapper {
+  min-height: 180px;
+  display: flex;
+  align-items: end;
+}
 #poll-options {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-  }
-  
-  .poll-option {
-    margin-bottom: 10px;
-  }
-  
-  .option-name {
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  .progress-bar {
-    background-color: #f8f9fa;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    height: 20px;
-    overflow: hidden;
-  }
-  
-  .progress {
-    height: 100%;
-    background-color: #007bff; /* Adjust color as needed */
-  }
-  
-  .vote-count {
-    margin-top: 5px;
-    font-size: 14px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.poll-option {
+  margin-bottom: 10px;
+}
+
+.option-name {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.progress-bar {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  height: 20px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  background-color: #007bff; /* Adjust color as needed */
+}
+
+.vote-count {
+  margin-top: 5px;
+  font-size: 14px;
+}
 
 .poll-buttons {
   display: flex;
@@ -120,7 +136,7 @@ h2 {
 #chat-messages {
   list-style-type: none;
   padding: 0;
-  max-height: 200px;
+  height: 200px;
   overflow-y: auto;
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -128,9 +144,52 @@ h2 {
 }
 
 #chat-messages li {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
+  padding: 2px;
+  /* border-bottom: 1px solid #ddd; */
 }
+
+.card {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Full viewport height */
+  }
+  
+  .card-content {
+    flex: 1; /* Take up all available space */
+    overflow-y: auto; /* Make the content scrollable if necessary */
+  }
+  
+  /* Styling for message items */
+  .message-item {
+    margin: 10px 0;
+  }
+  
+  /* Styling for message box */
+  .message-box {
+    background-color: #e0e0e0;
+    border-radius: 8px;
+    padding: 10px;
+    max-width: 80%;
+    text-align: center;
+  }
+  
+  /* Styling for username */
+  .username {
+    font-size: 0.8em;
+    color: gray; /* Optional: different color for the username */
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  /* Styling for message text */
+  .message {
+    margin: 0;
+    padding: 0;
+    font-size: 1em;
+    max-width: 125px;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
 
 .message-user {
   display: flex;
@@ -160,51 +219,50 @@ h2 {
 #logout-button:hover {
   color: #ff6666; /* Brighter red on hover */
 }
-#user-profile{
-    display: flex;
-    align-items: center;
-    justify-content: space-between ;
+#user-profile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 /* Basic styling for the user list container */
 #user-list {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: .30rem;
-    max-width: 300px; /* Adjust width as needed */
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  max-width: 300px; /* Adjust width as needed */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Styling for each user element */
 .user {
-    cursor: pointer;
-    padding: 8px 12px;
-    /* margin-bottom: 8px; */
-    border-radius: 3px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
+  cursor: pointer;
+  padding: 8px 12px;
+  /* margin-bottom: 8px; */
+  border-radius: 3px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
 }
 
 .user:hover {
-    background-color: #f0f0f0;
+  background-color: #f0f0f0;
 }
 
 .user:last-child {
-    margin-bottom: 0; /* Remove bottom margin for the last user element */
+  margin-bottom: 0; /* Remove bottom margin for the last user element */
 }
 
 h3 {
-    font-size: 24px; /* Adjust font size as needed */
-    font-weight: bold; /* Make the text bold */
-    color: #333; /* Set text color */
-    margin-bottom: 20px; /* Add bottom margin for spacing */
-    border-bottom: 2px solid #ccc; /* Add a bottom border */
-    padding-bottom: 5px; /* Space between text and border */
+  font-size: 24px; /* Adjust font size as needed */
+  font-weight: bold; /* Make the text bold */
+  color: #333; /* Set text color */
+  margin-bottom: 20px; /* Add bottom margin for spacing */
+  border-bottom: 2px solid #ccc; /* Add a bottom border */
+  padding-bottom: 5px; /* Space between text and border */
 }
-
